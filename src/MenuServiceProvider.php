@@ -107,8 +107,6 @@ class MenuServiceProvider extends ServiceProvider
             \Viviniko\Menu\Contracts\MenuService::class,
             \Viviniko\Menu\Services\Menu\MenuServiceImpl::class
         );
-
-        $this->app->singleton('menu', \Viviniko\Menu\Menu::class);
     }
 
 	/**
