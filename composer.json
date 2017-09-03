@@ -1,0 +1,37 @@
+{
+    "name": "viviniko/menu",
+    "description": "VIVINIKO Menu Service Provider",
+	"keywords": ["viviniko", "menu", "laravel"],
+	"homepage": "http://viviniko.com",
+	"license": "MIT",
+	"authors": [
+        {
+            "name": "viviniko",
+            "email": "viviniko.shop@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.0",
+        "illuminate/view": "~5.0",
+        "viviniko/permission": "dev-master",
+        "viviniko/repository": "dev-master",
+        "viviniko/support": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Viviniko\\Menu": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Viviniko\\Menu\\MenuServiceProvider"
+            ],
+            "aliases": {
+                "Menu": "Viviniko\\Menu\\Facades\\Menu"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
