@@ -103,10 +103,9 @@ class MenuServiceProvider extends ServiceProvider
 
     protected function registerMenuService()
     {
-        $this->app->singleton(
-            \Viviniko\Menu\Contracts\MenuService::class,
-            \Viviniko\Menu\Services\Menu\MenuServiceImpl::class
-        );
+        $this->app->singleton('menu', \Viviniko\Menu\Services\MenuServiceImpl::class);
+
+        $this->app->alias('menu', \Viviniko\Menu\Services\MenuService::class);
     }
 
 	/**
@@ -117,9 +116,8 @@ class MenuServiceProvider extends ServiceProvider
 	public function provides()
 	{
 		return [
-            \Viviniko\Menu\Repositories\Menu\MenuRepository::class,
-            \Viviniko\Menu\Repositories\MenuItem\MenuItemRepository::class,
-            \Viviniko\Menu\Contracts\MenuService::class,
+		    'menu',
+            \Viviniko\Menu\Services\MenuService::class,
         ];
 	}
 

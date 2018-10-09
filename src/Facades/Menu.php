@@ -13,6 +13,6 @@ class Menu extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \Viviniko\Menu\Contracts\MenuService::class;
+        return 'menu';
     }
 }

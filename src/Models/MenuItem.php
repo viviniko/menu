@@ -32,14 +32,14 @@ class MenuItem extends Model
         return $this->belongsTo(Permission::class, 'permission_id');
     }
 
-    public function allowed($user)
+    public function allow($user)
     {
-        if (!empty($this->permission)) {
+        if (!empty($this->permission) && $user) {
             return $user->can($this->permission->name);
         }
         if (count($this->children) > 0) {
             foreach($this->children as $item) {
-                if ($item->allowed($user)) {
+                if ($item->allow($user)) {
                     return true;
                 }
             }

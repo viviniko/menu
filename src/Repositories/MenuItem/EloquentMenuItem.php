@@ -2,14 +2,15 @@
 
 namespace Viviniko\Menu\Repositories\MenuItem;
 
-use Viviniko\Repository\SimpleRepository;
+use Illuminate\Support\Facades\Config;
+use Viviniko\Repository\EloquentRepository;
 
-class EloquentMenuItem extends SimpleRepository implements MenuItemRepository
+class EloquentMenuItem extends EloquentRepository implements MenuItemRepository
 {
-    /**
-     * @var string
-     */
-    protected $modelConfigKey = 'menu.menu_item';
+    public function __construct()
+    {
+        parent::__construct(Config::get('menu.menu_item'));
+    }
 
     /**
      * Find menu items by menu.
@@ -19,7 +20,7 @@ class EloquentMenuItem extends SimpleRepository implements MenuItemRepository
      */
     public function getTreeByMenuId($menuId)
     {
-        $query = $this->createModel()->newQuery()->select('*', 'title as text', 'icon_class as icon');
+        $query = $this->createQuery()->select('*', 'title as text', 'icon_class as icon');
         $menuItems = $query->where(['menu_id' => $menuId])->orderBy('sort', 'asc')->get();
 
         return build_tree($menuItems);

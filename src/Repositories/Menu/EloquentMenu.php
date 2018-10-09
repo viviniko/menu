@@ -2,29 +2,21 @@
 
 namespace Viviniko\Menu\Repositories\Menu;
 
-use Viviniko\Repository\SimpleRepository;
+use Illuminate\Support\Facades\Config;
+use Viviniko\Repository\EloquentRepository;
 
-class EloquentMenu extends SimpleRepository implements MenuRepository
+class EloquentMenu extends EloquentRepository implements MenuRepository
 {
-    /**
-     * @var string
-     */
-    protected $modelConfigKey = 'menu.menu';
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function all()
+    public function __construct()
     {
-        return $this->search([])->get();
-	}
+        parent::__construct(Config::get('menu.menu'));
+    }
 
-	/**
+    /**
 	 * {@inheritdoc}
 	 */
 	public function findByName($name)
     {
 		return $this->findBy('name', $name)->first();
 	}
-
 }

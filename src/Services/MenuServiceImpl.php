@@ -1,13 +1,13 @@
 <?php
 
-namespace Viviniko\Menu\Services\Menu;
+namespace Viviniko\Menu\Services;
 
 use Illuminate\Support\Facades\Auth;
-use Viviniko\Menu\Contracts\MenuService as MenuServiceInterface;
 use Viviniko\Menu\Repositories\MenuItem\MenuItemRepository;
 use Viviniko\Menu\Repositories\Menu\MenuRepository;
+use Viviniko\Menu\Services\Menu\Builder;
 
-class MenuServiceImpl implements MenuServiceInterface
+class MenuServiceImpl implements MenuService
 {
     protected $menus;
 
@@ -15,11 +15,24 @@ class MenuServiceImpl implements MenuServiceInterface
 
     protected $builtMenus;
 
+    protected $user;
+
     public function __construct(MenuRepository $menus, MenuItemRepository $menuItems)
     {
         $this->menus = $menus;
         $this->menuItems = $menuItems;
         $this->builtMenus = collect([]);
+    }
+
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+
+    public function getUser()
+    {
+        return $this->user;
     }
 
     public function has($key)
@@ -45,10 +58,10 @@ class MenuServiceImpl implements MenuServiceInterface
         return $builder;
     }
 
-    protected function buildMenuItems($menu, $items) {
-        $user = Auth::user();
+    protected function buildMenuItems($menu, $items)
+    {
         foreach ($items as $item) {
-            if ($item->allowed($user)) {
+            if ($item->allow($this->getUser())) {
                 $options = [ 'url' => $item->url, 'id' => $item->id ];
                 if (!empty($item->color)) {
                     $options['style'] = 'color: ' . $item->color;
