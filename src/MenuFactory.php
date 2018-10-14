@@ -51,7 +51,7 @@ class MenuFactory implements Factory
             $builder = new Builder($name);
 
             $builder->options(['header' => $menu->display_name]);
-            $this->buildMenuItems($builder, $this->menuItems->getTreeByMenuId($menu->id));
+            $this->buildMenuItems($builder, build_tree($this->menuItems->findByMenuId($menu->id)));
         }
         $this->builtMenus->put($name, $builder);
 
