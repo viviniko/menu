@@ -4,7 +4,6 @@ namespace Viviniko\Menu\Services;
 
 use Viviniko\Menu\Repositories\MenuItem\MenuItemRepository;
 use Viviniko\Menu\Repositories\Menu\MenuRepository;
-use Viviniko\Menu\Services\Menu\Builder;
 
 class MenuServiceImpl implements MenuService
 {
