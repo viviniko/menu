@@ -12,6 +12,6 @@
     @endif
     </li>
     @if($item->divider)
-        <li{!! \Viviniko\Menu\Services\Menu\Builder::attributes($item->divider) !!}></li>
+        <li{!! \Viviniko\Menu\Elem\Builder::attributes($item->divider) !!}></li>
     @endif
 @endforeach
