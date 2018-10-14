@@ -4,32 +4,23 @@ namespace Viviniko\Menu\Services;
 
 interface MenuService
 {
-    /**
-     * @param $name
-     * @return mixed
-     */
-    public function has($name);
+    public function menus();
 
-    /**
-     * Build menu by name.
-     *
-     * @param $name
-     * @return mixed
-     */
-    public function build($name);
+    public function getMenu($id);
 
-    /**
-     * Set permission user.
-     *
-     * @param $user
-     * @return static
-     */
-    public function setUser($user);
+    public function createMenu(array $data);
 
-    /**
-     * Get permission user.
-     *
-     * @return mixed
-     */
-    public function getUser();
+    public function updateMenu($id, array $data);
+
+    public function deleteMenu($id);
+
+    public function getMenuItemsByMenuId($menuId);
+
+    public function getMenuItem($id);
+
+    public function createMenuItem(array $data);
+
+    public function updateMenuItem($id, array $data);
+
+    public function deleteMenuItem($id);
 }

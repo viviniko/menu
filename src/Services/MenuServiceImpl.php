@@ -2,7 +2,6 @@
 
 namespace Viviniko\Menu\Services;
 
-use Illuminate\Support\Facades\Auth;
 use Viviniko\Menu\Repositories\MenuItem\MenuItemRepository;
 use Viviniko\Menu\Repositories\Menu\MenuRepository;
 use Viviniko\Menu\Services\Menu\Builder;
@@ -13,71 +12,59 @@ class MenuServiceImpl implements MenuService
 
     protected $menuItems;
 
-    protected $builtMenus;
-
-    protected $user;
-
     public function __construct(MenuRepository $menus, MenuItemRepository $menuItems)
     {
         $this->menus = $menus;
         $this->menuItems = $menuItems;
-        $this->builtMenus = collect([]);
     }
 
-    public function setUser($user)
+    public function menus()
     {
-        $this->user = $user;
-        return $this;
+        return $this->menus->all();
     }
 
-    public function getUser()
+    public function getMenu($id)
     {
-        return $this->user;
+        return $this->menus->find($id);
     }
 
-    public function has($key)
+    public function createMenu(array $data)
     {
-        return $this->menus->exists('name', $key);
+        return $this->menus->create($data);
     }
 
-    public function build($name)
+    public function updateMenu($id, array $data)
     {
-        if ($this->builtMenus->has($name)) {
-            return $this->builtMenus->get($name);
-        }
-
-        $builder = null;
-        if ($menu = $this->menus->findByName($name)) {
-            $builder = new Builder($name);
-
-            $builder->options(['header' => $menu->display_name]);
-            $this->buildMenuItems($builder, $this->menuItems->getTreeByMenuId($menu->id));
-        }
-        $this->builtMenus->put($name, $builder);
-
-        return $builder;
+        return $this->menus->update($id, $data);
     }
 
-    protected function buildMenuItems($menu, $items)
+    public function deleteMenu($id)
     {
-        foreach ($items as $item) {
-            if ($item->allow($this->getUser())) {
-                $options = [ 'url' => $item->url, 'id' => $item->id ];
-                if (!empty($item->color)) {
-                    $options['style'] = 'color: ' . $item->color;
-                }
-                if (!empty($item->parent_id)) {
-                    $options['parent'] = $item->parent_id;
-                }
-                $data = [
-                    'icon' => $item->icon_class,
-                    // 'sort_by' => $item->sort,
-                ];
-                $menu->add($item->title, $options)->data($data);
-                if (count($item->children) > 0) {
-                    $this->buildMenuItems($menu, $item->children);
-                }
-            }
-        }
+        return $this->menus->delete($id);
+    }
+
+    public function getMenuItemsByMenuId($menuId)
+    {
+        return $this->menuItems->findByMenuId($menuId);
+    }
+
+    public function getMenuItem($id)
+    {
+        return $this->menuItems->find($id);
+    }
+
+    public function createMenuItem(array $data)
+    {
+        return $this->menuItems->create($data);
+    }
+
+    public function updateMenuItem($id, array $data)
+    {
+        return $this->menuItems->update($id, $data);
+    }
+
+    public function deleteMenuItem($id)
+    {
+        return $this->menuItems->delete($id);
     }
 }

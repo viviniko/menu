@@ -6,14 +6,7 @@ use Viviniko\Menu\Models\Menu;
 
 interface MenuItemRepository
 {
-
-    /**
-     * Get menu items tree by menu.
-     *
-     * @param $menuId
-     * @return mixed
-     */
-	public function getTreeByMenuId($menuId);
+	public function findByMenuId($menuId);
 
 	/**
 	 * Find system Menu by id.
@@ -47,13 +40,4 @@ interface MenuItemRepository
 	 * @return bool
 	 */
 	public function delete($id);
-
-    /**
-     * Remove menu items from repository.
-     *
-     * @param array | string $ids
-     * @return int
-     */
-	public function deleteAll($ids);
-
 }

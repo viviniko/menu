@@ -1,6 +1,6 @@
 <?php
 
-namespace Viviniko\Menu\Services\Menu;
+namespace Viviniko\Menu\Elem;
 
 class Builder
 {
