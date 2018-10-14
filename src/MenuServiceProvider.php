@@ -45,7 +45,7 @@ class MenuServiceProvider extends ServiceProvider
 
             $pattern = '/(?<!\w)(\s*)@lm-endattrs(\s*)/';
             return preg_replace($pattern,
-                '$1<?php echo \Viviniko\Menu\Services\Menu\Builder::mergeStatic(ob_get_clean(), $lm_attrs); ?>$2',
+                '$1<?php echo \Viviniko\Menu\Elem\Builder::mergeStatic(ob_get_clean(), $lm_attrs); ?>$2',
                 $view);
         });
 
