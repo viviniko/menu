@@ -10,7 +10,7 @@ class MenuItem extends Model
     protected $tableConfigKey = 'menu.menu_items_table';
 
     protected $fillable = [
-        'menu_id', 'title', 'description', 'url', 'target', 'icon_class', 'color', 'parent_id', 'permission_id', 'sort'
+        'menu_id', 'title', 'description', 'url', 'target', 'icon_class', 'color', 'parent_id', 'permission', 'sort'
     ];
 
     public function getTextAttribute()
@@ -27,15 +27,10 @@ class MenuItem extends Model
         return $this->belongsTo(Menu::class, 'menu_id');
     }
 
-    public function permission()
-    {
-        return $this->belongsTo(Permission::class, 'permission_id');
-    }
-
     public function allow($user)
     {
         if (!empty($this->permission) && $user) {
-            return $user->can($this->permission->name);
+            return $user->can($this->permission);
         }
         if (count($this->children) > 0) {
             foreach($this->children as $item) {

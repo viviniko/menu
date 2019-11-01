@@ -45,7 +45,7 @@ class CreateMenuTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('parent_id')->nullable();
             $table->unsignedInteger('menu_id');
-            $table->unsignedInteger('permission_id')->nullable();
+            $table->string('permission')->nullable();
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('url')->nullable();
