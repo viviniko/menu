@@ -2,6 +2,7 @@
 
 namespace Viviniko\Menu\Elem;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class Item
@@ -83,7 +84,7 @@ class Item
 		$this->builder     = $builder;
 		$this->id          = $id;
 		$this->title       = $title;
-		$this->name        = isset($options['name']) ? $options['name'] : camel_case(Str::ascii($title));
+		$this->name        = isset($options['name']) ? $options['name'] : Str::camel(Str::ascii($title));
 		$this->attributes  = $this->builder->extractAttributes($options); 
 		$this->parent      = (is_array($options) && isset($options['parent'])) ? $options['parent'] : null;
 
@@ -93,7 +94,7 @@ class Item
 		} else if (isset($options['raw']) && $options['raw'] == true) {
 			$path = null;
 		} else {
-			$path = array_only($options, array('url', 'route', 'action', 'secure'));
+			$path = Arr::only($options, array('url', 'route', 'action', 'secure'));
 		}
 		if (!is_null($path)) {
 			$path['prefix'] = $this->builder->getLastGroupPrefix();

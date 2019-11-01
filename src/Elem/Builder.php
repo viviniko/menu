@@ -2,6 +2,8 @@
 
 namespace Viviniko\Menu\Elem;
 
+use Illuminate\Support\Arr;
+
 class Builder
 {
 	
@@ -224,7 +226,7 @@ class Builder
 		$new['prefix'] = self::formatGroupPrefix($new, $old);
 		$new['class']  = self::formatGroupClass($new, $old);
 		
-		return array_merge(array_except($old, array('prefix', 'class')), $new);
+		return array_merge(Arr::except($old, array('prefix', 'class')), $new);
 	}
 
 	/**
@@ -237,8 +239,8 @@ class Builder
 	public static function formatGroupPrefix($new, $old)
 	{
 	    return isset($new['prefix']) ?
-            trim(array_get($old, 'prefix'), '/') . '/' . trim($new['prefix'], '/') :
-            array_get($old, 'prefix');
+            trim(Arr::get($old, 'prefix'), '/') . '/' . trim($new['prefix'], '/') :
+            Arr::get($old, 'prefix');
 	}
 
 	/**
@@ -248,7 +250,7 @@ class Builder
 	 */
 	public function getLastGroupPrefix()
 	{
-	    return count($this->groupStack) > 0 ? array_get(last($this->groupStack), 'prefix', '') : null;
+	    return count($this->groupStack) > 0 ? Arr::get(last($this->groupStack), 'prefix', '') : null;
 	}
 
 	/**
@@ -272,11 +274,11 @@ class Builder
 	public static function formatGroupClass($new, $old)
     {
 		if (isset($new['class'])) {
-			$classes = trim(trim(array_get($old, 'class')) . ' ' . trim(array_get($new, 'class')));
+			$classes = trim(trim(Arr::get($old, 'class')) . ' ' . trim(Arr::get($new, 'class')));
 			return implode(' ', array_unique(explode(' ', $classes)));
 		}
 
-		return array_get($old, 'class');
+		return Arr::get($old, 'class');
 	}
 
 	/**
@@ -295,7 +297,7 @@ class Builder
 			$options = $this->mergeWithLastGroup($options);
 		}
 
-		return array_except($options, $this->reserved);
+		return Arr::except($options, $this->reserved);
 	}
 
 	/**
@@ -593,7 +595,7 @@ class Builder
 		$attrs['class']  = self::formatGroupClass($attrs, $old);
 
 		// Merging new and old array and parse it as a string
-		return self::attributes(array_merge(array_except($old, array('class')), $attrs));
+		return self::attributes(array_merge(Arr::except($old, array('class')), $attrs));
 	}
 
 	/**
