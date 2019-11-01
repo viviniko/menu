@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'menus_table' => 'admin_menus',
+    'menus_table' => 'menu_menus',
 
-    'menu_items_table' => 'admin_menu_items',
+    'menu_items_table' => 'menu_items',
 
     'menu' => 'Viviniko\Menu\Models\Menu',
 
